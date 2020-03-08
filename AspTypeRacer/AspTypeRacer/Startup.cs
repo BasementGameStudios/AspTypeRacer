@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using AspTypeRacer.Models;
 
 namespace AspTypeRacer
 {
@@ -15,6 +17,14 @@ namespace AspTypeRacer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            using (var client = new SimpleDbContext())
+            {
+                //Create the database file at a path defined in SimpleDbContext
+                client.Database.EnsureCreated();
+                //Create the database tables defined in SimpleDbContext
+                client.Database.Migrate();
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -22,6 +32,8 @@ namespace AspTypeRacer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkSqlite();
+
             services.AddControllersWithViews();
         }
 
