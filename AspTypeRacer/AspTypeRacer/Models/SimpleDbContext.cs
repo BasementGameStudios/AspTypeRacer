@@ -9,8 +9,10 @@ namespace AspTypeRacer.Models
 {
     public class SimpleDbContext : DbContext
     {
+         
+        public SimpleDbContext(){ }
 
-        public SimpleDbContext() { }
+        public SimpleDbContext(DbContextOptions<SimpleDbContext> options):base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -19,6 +21,7 @@ namespace AspTypeRacer.Models
         }
 
         public DbSet<Customer> Customer {get;set;}
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
