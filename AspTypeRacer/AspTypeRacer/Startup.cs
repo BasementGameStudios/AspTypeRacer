@@ -17,14 +17,14 @@ namespace AspTypeRacer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
+            /*
             using (var client = new SimpleDbContext())
             {
                 //Create the database file at a path defined in SimpleDbContext
                 client.Database.EnsureCreated();
                 //Create the database tables defined in SimpleDbContext
                 client.Database.Migrate();
-            }
+            }*/
         }
 
         public IConfiguration Configuration { get; }
@@ -32,7 +32,9 @@ namespace AspTypeRacer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkSqlite();
+           // services.AddEntityFrameworkSqlite();
+
+            services.AddDbContext<SimpleDbContext>(options => options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddControllersWithViews();
         }
