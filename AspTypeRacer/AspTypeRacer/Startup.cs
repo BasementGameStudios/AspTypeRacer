@@ -17,14 +17,14 @@ namespace AspTypeRacer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            /*
-            using (var client = new SimpleDbContext())
+            
+            using (var client = new SQLiteDbContext())
             {
                 //Create the database file at a path defined in SimpleDbContext
                 client.Database.EnsureCreated();
                 //Create the database tables defined in SimpleDbContext
                 client.Database.Migrate();
-            }*/
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -34,7 +34,7 @@ namespace AspTypeRacer
         {
            // services.AddEntityFrameworkSqlite();
 
-            services.AddDbContext<SimpleDbContext>(options => options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddDbContext<SQLiteDbContext>(options => options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddControllersWithViews();
         }
