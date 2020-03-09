@@ -1,7 +1,16 @@
-﻿
+﻿@model Customer[]
+
 @{
     ViewData["Title"] = "SqlLiteTest";
 }
 
 <h1>SqlLiteTest</h1>
 
+<div class="text-center">
+
+    @foreach(var customer in Model)
+    {
+        <h3><b>@customer.Name</b></h3>
+    }
+
+</div>

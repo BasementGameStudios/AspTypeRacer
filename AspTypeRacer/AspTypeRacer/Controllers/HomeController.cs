@@ -13,12 +13,12 @@ namespace AspTypeRacer.Controllers
     public class HomeController : Controller
     {
 
-        private readonly SimpleDbContext _db;
+        private readonly SQLiteDbContext _db;
         private readonly ILogger<HomeController> _logger;
 
         //private readonly CustomerDBContext _customerContext = new CustomerDBContext();
 
-        public HomeController(ILogger<HomeController> logger, SimpleDbContext db)
+        public HomeController(ILogger<HomeController> logger, SQLiteDbContext db)
         {
             _db = db;
             _logger = logger;
@@ -38,7 +38,7 @@ namespace AspTypeRacer.Controllers
             db.SaveChanges();
             */
 
-            Customer cust = _db.Customer.FirstOrDefault();
+            Customer cust = _db.Customers.FirstOrDefault();
 
             ViewBag.Name = "Guest";
            // Customer cust = _customerContext.Customers.FirstOrDefault();
@@ -53,7 +53,8 @@ namespace AspTypeRacer.Controllers
         public IActionResult SqlLiteTest()
         {
             AddUser("Blah");
-            return View();
+            Customer[] allCustomers = _db.Customers.ToArray();
+            return View(allCustomers);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -64,12 +65,12 @@ namespace AspTypeRacer.Controllers
 
         public IActionResult AddUser(string userName)
         {
-            var test = _db.Customer.Where(a => a.Name == userName);
+            var test = _db.Customers.Where(a => a.Name == userName);
             //See if the name already exists in our database
             if (!test.Any())
             {
                 Console.WriteLine("Adding a user...");
-                _db.Customer.Add(new Customer { Name = userName });
+                _db.Customers.Add(new Customer { Name = userName });
                 _db.SaveChanges();
             }
             else

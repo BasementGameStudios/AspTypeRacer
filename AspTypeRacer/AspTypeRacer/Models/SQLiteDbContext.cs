@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspTypeRacer.Models
 {
-    public class SimpleDbContext : DbContext
+    public class SQLiteDbContext : DbContext
     {
          
-        public SimpleDbContext(){ }
+        public SQLiteDbContext(){ }
 
-        public SimpleDbContext(DbContextOptions<SimpleDbContext> options):base(options) { }
+        public SQLiteDbContext(DbContextOptions<SQLiteDbContext> options):base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,7 +20,7 @@ namespace AspTypeRacer.Models
             optionsBuilder.UseSqlite("Data Source=testdb.sqlite");
         }
 
-        public DbSet<Customer> Customer {get;set;}
+        public DbSet<Customer> Customers {get;set;}
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
